@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContestantController;
 
 Route::get('/', function ()
 {
@@ -28,3 +29,5 @@ Route::get('/sas/dashboard', function ()
 {
     return view('sas.dashboard');
 })->name('sas.dashboard');
+
+Route::get('/admin/contestants', [ContestantController::class, 'index'])->name('admin.contestants');
