@@ -21,8 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // 👈 added role to fillable
-        'status', // 👈 added status to fillable
+        'role',
+        'status',
     ];
 
     /**
@@ -47,4 +47,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function judgedEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_judge');
+    }
+
+    public function sasEvents()
+    {
+        return $this->belongsToMany(Event::class, 'event_sas');
+    }
+
 }

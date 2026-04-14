@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
     // Show User Roles Page
     public function index()
     {
@@ -19,7 +18,6 @@ class UserController extends Controller
 
         return view('admin.user-roles', compact('users', 'roleCounts'));
     }
-
 
     // STORE NEW USER (Add User Modal)
     public function store(Request $request)
@@ -41,7 +39,6 @@ class UserController extends Controller
         return back()->with('success', 'User created successfully!');
     }
 
-
     // UPDATE USER (Edit Modal)
     public function update(Request $request, User $user)
     {
@@ -56,5 +53,4 @@ class UserController extends Controller
 
         return back()->with('success', 'User updated successfully.');
     }
-
 }

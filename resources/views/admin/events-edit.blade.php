@@ -43,17 +43,35 @@
             </div>
         </div>
 
-        {{-- Right: Assign Judges & SAS (future feature) --}}
-        <div class="event-form-side">
-            <div class="card">
-                <div class="card-header"><h2 class="card-title">Judges</h2></div>
-                <div class="assigned-list"><div class="assigned-empty">Feature coming soon</div></div>
-            </div>
-            <div class="card">
-                <div class="card-header"><h2 class="card-title">SAS</h2></div>
-                <div class="assigned-list"><div class="assigned-empty">Feature coming soon</div></div>
-            </div>
-        </div>
+        {{-- Right: Assign Judges & SAS --}}
+        <div class="card">
+    <div class="card-header"><h2 class="card-title">Judges</h2></div>
+    <div class="assigned-list">
+        <select name="judges[]" multiple class="form-input">
+            @foreach($users->where('role', 'judge') as $judge)
+                <option value="{{ $judge->id }}"
+                    {{ $event->judges->contains($judge->id) ? 'selected' : '' }}>
+                    {{ $judge->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header"><h2 class="card-title">SAS</h2></div>
+    <div class="assigned-list">
+        <select name="sas[]" multiple class="form-input">
+            @foreach($users->where('role', 'sas') as $sas)
+                <option value="{{ $sas->id }}"
+                    {{ $event->sas->contains($sas->id) ? 'selected' : '' }}>
+                    {{ $sas->name }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
     </div>
 </form>
 
@@ -69,8 +87,8 @@
     <span class="checkmark">⚠</span>
     <p>Are you sure you want to delete this event?</p>
     <div style="margin-top:1rem; display:flex; gap:0.5rem;">
+        <button id="cancelDelete" class="btn btn--gold">Cancel</button>
         <button id="confirmDelete" class="btn btn--danger">Yes, Delete</button>
-        <button id="cancelDelete" class="btn btn--outline">Cancel</button>
     </div>
 </div>
 

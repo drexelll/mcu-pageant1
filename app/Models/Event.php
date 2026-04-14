@@ -8,13 +8,24 @@ use App\Models\Contestant;
 class Event extends Model
 {
     protected $fillable =
-    [
-        'eventName',
-        'status',
-    ];
+        [
+            'eventName',
+            'status',
+        ];
 
     public function contestants()
     {
-        return $this -> hasMany(Contestant::class);
+        return $this->hasMany(Contestant::class);
     }
+
+    public function judges()
+    {
+        return $this->belongsToMany(User::class, 'event_judge');
+    }
+
+    public function sas()
+    {
+        return $this->belongsToMany(User::class, 'event_sas');
+    }
+
 }
