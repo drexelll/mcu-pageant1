@@ -114,4 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Make functions globally accessible
     window.openAssignModal = openAssignModal;
     window.closeAssignModal = closeAssignModal;
+    window.removeAssigned = removeAssigned;
+
 });

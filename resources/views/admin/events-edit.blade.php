@@ -97,6 +97,7 @@
                 </div>
             </div>
 
+
         </div>
 
         {{-- Update button --}}
@@ -136,8 +137,8 @@
         const assignedSas = @json($event->sas->pluck('id'));
         const assignedContestants = @json($event->contestants->pluck('id'));
     </script>
-
-    @push('scripts')
-        <script src="{{ asset('js/admin_events.js') }}"></script>
-    @endpush
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/admin_events.js') }}"></script>
+@endpush
