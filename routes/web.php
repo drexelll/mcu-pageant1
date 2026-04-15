@@ -37,22 +37,8 @@ Route::get('/admin/events/{event}/edit', [EventController::class, 'edit'])->name
 Route::put('/admin/events/{event}',      [EventController::class, 'update'])->name('admin.events.update');
 Route::delete('/admin/events/{event}',   [EventController::class, 'destroy'])->name('admin.events.destroy');
 
-<<<<<<< HEAD
 // ─── Judge ───────────────────────────────────────────────────────
 Route::get('/judge/dashboard', function () {
-=======
-Route::put('/admin/events/{event}', [EventController::class, 'update'])->name('admin.events.update');
-
-Route::delete('/admin/events/{event}', [EventController::class, 'destroy'])->name('admin.events.destroy');
-
-Route::put('/admin/events/{event}/assign/{type}', [EventController::class, 'assign'])->name('admin.events.assign');
-
-Route::delete('/admin/events/{event}/unassign/{type}/{id}', [EventController::class, 'unassign'])->name('admin.events.unassign');
-
-// ─── Judge ───────────────────────────────
-Route::get('/judge/dashboard', function ()
-{
->>>>>>> 0919fd1fbacd55237a646c4c93d652a4944b4256
     return view('judge.dashboard');
 })->name('judge.dashboard');
 
