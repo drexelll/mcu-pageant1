@@ -10,22 +10,37 @@ class UserController extends Controller
 {
     // ── Index ────────────────────────────────────────────────────
     public function index(Request $request)
-    {
-        $perPage = (int) $request->input('per_page', 10);
+{
+    $perPage = (int) $request->input('per_page', 10);
 
-        // Prevent abuse
-        if (!in_array($perPage, [10, 25, 50, 100])) {
-            $perPage = 10;
-        }
-
-        $users = User::paginate($perPage)->appends($request->query());
-
-        $roleCounts = User::selectRaw('role, count(*) as count')
-                          ->groupBy('role')
-                          ->pluck('count', 'role');
-
-        return view('admin.user-roles', compact('users', 'roleCounts'));
+    if (!in_array($perPage, [10, 25, 50, 100])) {
+        $perPage = 10;
     }
+
+    $query = User::query();
+
+    // Apply search if provided
+    if ($search = $request->input('search')) {
+        $query->where(function($q) use ($search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('email', 'like', "%{$search}%")
+              ->orWhere('role', 'like', "%{$search}%");
+        });
+    }
+
+    $users = $query->paginate($perPage)->appends($request->query());
+    if ($request->ajax()) {
+        // Return only the table rows if AJAX
+        return view('admin.partials.user-rows', compact('users'))->render();
+    }
+
+    $roleCounts = User::selectRaw('role, count(*) as count')
+                      ->groupBy('role')
+                      ->pluck('count', 'role');
+
+    return view('admin.user-roles', compact('users', 'roleCounts'));
+}
+
 
     // ── Store ────────────────────────────────────────────────────
     public function store(Request $request)

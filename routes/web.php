@@ -31,7 +31,7 @@ Route::get('/admin/contestants', [ContestantController::class, 'index'])->name('
 
 // ─── Admin Events ────────────────────────────────────────────────
 Route::get('/admin/events',              [EventController::class, 'index'])->name('admin.events');
-Route::get('/admin/events/create',       [EventController::class, 'create'])->name('admin.events.create');
+Route::get('/admin/events/create', function () { return view('admin.events-create'); })->name('admin.events.create');
 Route::post('/admin/events',             [EventController::class, 'store'])->name('admin.events.store');
 Route::get('/admin/events/{event}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
 Route::put('/admin/events/{event}',      [EventController::class, 'update'])->name('admin.events.update');
