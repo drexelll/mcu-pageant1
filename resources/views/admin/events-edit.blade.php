@@ -15,7 +15,7 @@
         @csrf
         @method('PUT')
 
-        <div class="two-col" style="grid-template-columns: repeat(4, 1fr); gap: 1.25rem;">
+        <div class="two-col" style="grid-template-columns: repeat(3, 1fr); gap: 1.25rem;">
 
             {{-- Event Details --}}
             <div class="card">
@@ -75,43 +75,18 @@
                     @endforelse
                 </div>
             </div>
-
-            {{-- Contestants --}}
-            <div class="card">
-                <div class="card-header" style="display:flex; justify-content:space-between; align-items:center;">
-                    <h2 class="card-title">Contestants</h2>
-                    <button type="button" class="btn btn--outline btn--sm" onclick="openAssignModal('contestant')">Assign
-                        Contestants</button>
-                </div>
-                <div class="assigned-list">
-                    @forelse($event->contestants as $contestant)
-                        <div class="assigned-item">
-                            <span class="assigned-item-name">#{{ $contestant->number }} — {{ $contestant->name }}
-                                ({{ $contestant->course }})</span>
-                            <button type="button" class="assigned-remove"
-                                onclick="removeAssigned({{ $contestant->id }}, 'contestant')">✕</button>
-                        </div>
-                    @empty
-                        <div class="assigned-empty">No contestants assigned</div>
-                    @endforelse
-                </div>
-            </div>
-
-
         </div>
 
-        {{-- Update button --}}
-        <div class="form-actions" style="margin-top:1.5rem;">
-            <button type="submit" class="btn btn--gold">Update Event</button>
+        {{-- Both buttons side by side --}}
+        <div class="form-actions" style="margin-top:0.5rem; display:flex; gap:0.75rem;">
+            <button type="submit" form="updateForm" class="btn btn--gold">Update Event</button>
+            <button type="button" id="deleteBtn" class="btn btn--danger">Delete Event</button>
         </div>
     </form>
 
-    {{-- Delete form (separate, sibling) --}}
-    <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" id="deleteForm"
-        style="margin-top:1.5rem;">
+    <form action="{{ route('admin.events.destroy', $event->id) }}" method="POST" id="deleteForm">
         @csrf
         @method('DELETE')
-        <button type="button" id="deleteBtn" class="btn btn--danger">Delete Event</button>
     </form>
 
     {{-- Delete Confirmation Modal --}}
@@ -137,8 +112,9 @@
         const assignedSas = @json($event->sas->pluck('id'));
         const assignedContestants = @json($event->contestants->pluck('id'));
     </script>
+
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/admin_events.js') }}"></script>
+    <script src="{{ asset('js/admin/admin_events.js') }}"></script>
 @endpush

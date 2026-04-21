@@ -11,9 +11,7 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/admin/dashboard', function () {
-    return view('admin.dashboard');
-})->name('admin.dashboard');
+Route::get('/admin/dashboard', function () { return view('admin.dashboard'); })->name('admin.dashboard');
 
 // ─── Admin Users ─────────────────────────────────────────────────
 Route::get('/admin/user-roles',          [UserController::class, 'index'])->name('admin.user-roles');
@@ -31,22 +29,23 @@ Route::get('/admin/contestants', [ContestantController::class, 'index'])->name('
 
 // ─── Admin Events ────────────────────────────────────────────────
 Route::get('/admin/events',              [EventController::class, 'index'])->name('admin.events');
-Route::get('/admin/events/create',       [EventController::class, 'create'])->name('admin.events.create');
+Route::get('/admin/events/create', [EventController::class, 'create'])->name('admin.events.create');
 Route::post('/admin/events',             [EventController::class, 'store'])->name('admin.events.store');
 Route::get('/admin/events/{event}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
 Route::put('/admin/events/{event}',      [EventController::class, 'update'])->name('admin.events.update');
 Route::delete('/admin/events/{event}',   [EventController::class, 'destroy'])->name('admin.events.destroy');
+Route::put('/admin/events/{event}/assign/{type}', [EventController::class, 'assign'])->name('admin.events.assign');
+Route::delete('/admin/events/{event}/unassign/{type}/{id}', [EventController::class, 'unassign'])->name('admin.events.unassign');
 
 // ─── Judge ───────────────────────────────────────────────────────
-Route::get('/judge/dashboard', function () {
-    return view('judge.dashboard');
-})->name('judge.dashboard');
+Route::get('/judge/dashboard', function () { return view('judge.dashboard'); })->name('judge.dashboard');
 
 // ─── SAS ─────────────────────────────────────────────────────────
-Route::get('/sas/dashboard', function () {
-    return view('sas.dashboard');
-})->name('sas.dashboard');
+Route::get('/sas/dashboard', function () { return view('sas.dashboard'); })->name('sas.dashboard');
+
 Route::get('/sas/contestants', [ContestantController::class, 'index'])->name('sas.contestants');
+Route::get('/sas/contestants/create', [ContestantController::class, 'create'])->name('sas.contestants.create');
+Route::post('/sas/contestants', [ContestantController::class, 'store'])->name('sas.contestants.store');
 
 // ─── Auth ────────────────────────────────────────────────────────
 Route::get('/auth/microsoft',          [AuthController::class, 'redirect'])->name('auth.microsoft');

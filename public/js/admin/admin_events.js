@@ -35,58 +35,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openAssignModal(type) {
-    const modal = document.getElementById('assignModal');
-    const title = document.getElementById('assignModalTitle');
-    const body = document.getElementById('assignModalBody');
-    const form = document.getElementById('assignForm');
+        const modal = document.getElementById('assignModal');
+        const title = document.getElementById('assignModalTitle');
+        const body = document.getElementById('assignModalBody');
+        const form = document.getElementById('assignForm');
 
-    modal.style.display = 'flex';
+        modal.style.display = 'flex';
 
-    if (type === 'judge') {
-        title.textContent = 'Assign Judges';
-        body.innerHTML = judges.map(j => `
+        if (type === 'judge') {
+            title.textContent = 'Assign Judges';
+            body.innerHTML = judges.map(j => `
             <label class="checkbox-item">
                 <input type="checkbox" name="judges[]" value="${j.id}"
                     ${assignedJudges.includes(j.id) ? 'checked' : ''}>
                 ${j.name}
             </label>
         `).join('');
-        form.action = `/admin/events/${eventId}/assign/judge`;
-    }
+            form.action = `/admin/events/${eventId}/assign/judge`;
+        }
 
-    else if (type === 'sas') {
-        title.textContent = 'Assign SAS';
-        body.innerHTML = sas.map(s => `
+        else if (type === 'sas') {
+            title.textContent = 'Assign SAS';
+            body.innerHTML = sas.map(s => `
             <label class="checkbox-item">
                 <input type="checkbox" name="sas[]" value="${s.id}"
                     ${assignedSas.includes(s.id) ? 'checked' : ''}>
                 ${s.name}
             </label>
         `).join('');
-        form.action = `/admin/events/${eventId}/assign/sas`;
-    }
+            form.action = `/admin/events/${eventId}/assign/sas`;
+        }
 
-    else if (type === 'contestant') {
-        title.textContent = 'Assign Contestants';
-        body.innerHTML = contestants.map(c => `
+        else if (type === 'contestant') {
+            title.textContent = 'Assign Contestants';
+            body.innerHTML = contestants.map(c => `
             <label class="checkbox-item">
                 <input type="checkbox" name="contestants[]" value="${c.id}"
                     ${assignedContestants.includes(c.id) ? 'checked' : ''}>
                 #${c.number} — ${c.name} (${c.course})
             </label>
         `).join('');
-        form.action = `/admin/events/${eventId}/assign/contestant`;
+            form.action = `/admin/events/${eventId}/assign/contestant`;
+        }
     }
-}
-
 
     function closeAssignModal() {
         document.getElementById('assignModal').style.display = 'none';
     }
 
-    document.getElementById('assignModal').addEventListener('click', function (e) {
-        if (e.target === this) closeAssignModal();
-    });
+    const assignModal = document.getElementById('assignModal');
+    if (assignModal) {
+        assignModal.addEventListener('click', function (e) {
+            if (e.target === this) closeAssignModal();
+        });
+    }
 
     function removeAssigned(id, type) {
         const form = document.createElement('form');

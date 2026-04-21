@@ -63,15 +63,6 @@ function clearFilters() {
 }
 
 // ── Modals ──────────────────────────────────────────────────────
-function openEditModal(id, name, email, role, status) {
-    document.getElementById('edit-name').value   = name;
-    document.getElementById('edit-email').value  = email;
-    document.getElementById('edit-role').value   = role;
-    document.getElementById('edit-status').value = status;
-    document.getElementById('editForm').action   = `/admin/users/${id}`;
-    document.getElementById('editModal').style.display = 'flex';
-}
-
 function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }

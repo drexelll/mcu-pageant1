@@ -16,6 +16,13 @@ class EventController extends Controller
         return view('admin.events', compact('events'));
     }
 
+    public function create()
+    {
+        $users = User::all();
+        $contestants = Contestant::all();
+        return view('admin.events-create', compact('users', 'contestants'));
+    }
+
     public function store(Request $request)
     {
         $event = new Event();
@@ -23,7 +30,13 @@ class EventController extends Controller
         $event->status = $request->input('status');
         $event->save();
 
-        return redirect()->route('admin.events')->with('success', 'Event created successfully!');
+        // Attach judges, SAS, contestants if provided
+        $event->judges()->sync($request->input('judges', []));
+        $event->sas()->sync($request->input('sas', []));
+        $event->contestants()->sync($request->input('contestants', []));
+
+        return redirect()->route('admin.events')
+            ->with('success', 'Event created successfully!');
     }
 
     public function edit(Event $event)
@@ -38,11 +51,6 @@ class EventController extends Controller
         $event->eventName = $request->input('eventName');
         $event->status = $request->input('status');
         $event->save();
-
-        // Sync judges, SAS, and contestants
-        $event->judges()->sync($request->input('judges', []));
-        $event->sas()->sync($request->input('sas', []));
-        $event->contestants()->sync($request->input('contestants', []));
 
         return redirect()->route('admin.events')
             ->with('success', 'Event updated successfully!');
