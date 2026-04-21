@@ -1,0 +1,221 @@
+/* ══════════════════════════════════════════
+   user-archive.css
+════════════════════════════════════════ */
+
+/* ── Card ──────────────────────────────── */
+.card {
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #ebebeb;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #f0f0f0;
+    background: #fafafa;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.card-header-sub {
+    font-size: 0.78rem;
+    color: #999;
+}
+
+/* ── Table helpers ─────────────────────── */
+.tbl-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.tbl-empty {
+    text-align: center;
+    color: rgba(0, 0, 0, 0.4);
+    padding: 2rem 0;
+}
+
+/* ── Days-left warning ─────────────────── */
+.days-warning {
+    color: #dc2626;
+    font-weight: 600;
+}
+
+/* ── Confirm Modals ────────────────────── */
+.alert-confirm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 20px;
+    padding: 2.25rem 2rem 1.75rem;
+    width: 100%;
+    max-width: 380px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    animation: confirmIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes confirmIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -46%) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* ── Icon badge ────────────────────────── */
+.alert-confirm__icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+}
+
+.alert-confirm__icon-wrap--restore {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 2px solid #bbf7d0;
+}
+
+.alert-confirm__icon-wrap--delete {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 2px solid #fecaca;
+}
+
+/* ── Text ──────────────────────────────── */
+.alert-confirm__title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+    color: #111;
+    letter-spacing: -0.01em;
+}
+
+.alert-confirm__name {
+    font-size: 0.88rem;
+    color: #555;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    background: #f5f5f5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+}
+
+.alert-confirm__desc {
+    font-size: 0.82rem;
+    color: #777;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+    max-width: 280px;
+}
+
+.alert-confirm__desc strong {
+    color: #444;
+}
+
+/* ── Action buttons ────────────────────── */
+.alert-confirm__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.alert-confirm__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.17s, transform 0.15s, box-shadow 0.17s;
+    border: none;
+    min-width: 110px;
+    justify-content: center;
+}
+
+.alert-confirm__cancel {
+    background: #f3f4f6;
+    color: #444;
+    border: 1px solid #e5e7eb;
+}
+
+.alert-confirm__cancel:hover {
+    background: #e9eaec;
+    transform: translateY(-1px);
+}
+
+.alert-confirm__restore {
+    background: #16a34a;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
+}
+
+.alert-confirm__restore:hover {
+    background: #15803d;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.4);
+}
+
+.alert-confirm__restore:active {
+    transform: translateY(0);
+}
+
+.alert-confirm__delete {
+    background: #dc2626;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.alert-confirm__delete:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+}
+
+.alert-confirm__delete:active {
+    transform: translateY(0);
+}
+
+/* ── Backdrop ──────────────────────────── */
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9997;
+    backdrop-filter: blur(2px);
+}
+
+/* ── Hidden forms ──────────────────────── */
+.form--hidden {
+    display: none;
+}

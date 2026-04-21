@@ -1,0 +1,168 @@
+/* ══════════════════════════════════════════
+   user-roles.css
+════════════════════════════════════════ */
+
+/* ── Page Header Actions ───────────────── */
+.page-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* ── Table Action Buttons ──────────────── */
+.tbl-actions {
+    display: flex;
+    gap: 0.4rem;
+    align-items: center;
+}
+
+/* ── No Results ────────────────────────── */
+.no-results {
+    display: none;
+    text-align: center;
+    padding: 2rem;
+    color: rgba(0, 0, 0, 0.35);
+    font-size: 0.875rem;
+}
+
+/* ── Archive Confirm Modal ─────────────── */
+.archive-confirm {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 20px;
+    padding: 2.25rem 2rem 1.75rem;
+    width: 100%;
+    max-width: 380px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18), 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    animation: archiveConfirmIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes archiveConfirmIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -46%) scale(0.92);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+.archive-confirm__icon-wrap {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    flex-shrink: 0;
+    background: #fff7ed;
+    color: #ea580c;
+    border: 2px solid #fed7aa;
+    font-size: 1.75rem;
+}
+
+.archive-confirm__title {
+    font-weight: 800;
+    font-size: 1.1rem;
+    margin-bottom: 0.35rem;
+    color: #111;
+    letter-spacing: -0.01em;
+}
+
+.archive-confirm__name {
+    font-size: 0.88rem;
+    color: #555;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    background: #f5f5f5;
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+}
+
+.archive-confirm__desc {
+    font-size: 0.82rem;
+    color: #777;
+    margin-bottom: 1.75rem;
+    line-height: 1.6;
+    max-width: 280px;
+}
+
+.archive-confirm__desc strong {
+    color: #444;
+}
+
+.archive-confirm__actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.archive-confirm__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.17s, transform 0.15s, box-shadow 0.17s;
+    border: none;
+    min-width: 110px;
+    justify-content: center;
+}
+
+.archive-confirm__cancel {
+    background: #f3f4f6;
+    color: #444;
+    border: 1px solid #e5e7eb;
+}
+
+.archive-confirm__cancel:hover {
+    background: #e9eaec;
+    transform: translateY(-1px);
+}
+
+.archive-confirm__submit {
+    background: #ea580c;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+}
+
+.archive-confirm__submit:hover {
+    background: #c2410c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+}
+
+.archive-confirm__submit:active {
+    transform: translateY(0);
+}
+
+/* ── Archive Backdrop ──────────────────── */
+.archive-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9997;
+    backdrop-filter: blur(2px);
+}
+
+/* ── Hidden form ───────────────────────── */
+.form--hidden {
+    display: none;
+}

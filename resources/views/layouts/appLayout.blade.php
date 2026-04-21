@@ -181,35 +181,42 @@
     </div>
 
             {{-- ── Logout Confirmation Modal ── --}}
-        <div id="logoutModal" class="modal-overlay" style="display:none;">
-            <div class="modal">
+            <div id="logoutModal" class="modal-overlay" style="display:none;">
+                <div class="logout-modal">
 
-                <div class="modal-header">
-                    <h3>Confirm Logout</h3>
-                    <button class="modal-close" onclick="closeLogoutModal()">×</button>
-                </div>
-
-                <div class="modal-body" style="text-align:center; padding: 2rem 1.5rem;">
-                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">👋</div>
-                    <p style="font-size: 0.95rem; color: #555; line-height: 1.6;">
-                        Are you sure you want to log out of <strong>MCU Pageant System</strong>?
-                    </p>
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn--outline" onclick="closeLogoutModal()">
-                        Cancel
-                    </button>
-                    <form method="POST" action="{{ route('auth.logout') }}" style="margin:0;">
-                        @csrf
-                        <button type="submit" class="btn" style="background: var(--danger); color: #fff; border: none;">
-                            Yes, Logout
+                    <div class="logout-modal__header">
+                        <div class="logout-modal__title-wrap">
+                            <span class="logout-modal__icon-badge">⚡</span>
+                            <h3 class="logout-modal__title">Confirm Logout</h3>
+                        </div>
+                        <button class="logout-modal__close" onclick="closeLogoutModal()" aria-label="Close">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         </button>
-                    </form>
-                </div>
+                    </div>
 
+                    <div class="logout-modal__body">
+                        <div class="logout-modal__wave-emoji">👋</div>
+                        <p class="logout-modal__message">
+                            Are you sure you want to log out of <strong>MCU Pageant</strong>?<br>
+                            <span class="logout-modal__sub">You'll need to sign in again to continue.</span>
+                        </p>
+                    </div>
+
+                    <div class="logout-modal__footer">
+                        <button class="btn btn--outline logout-modal__cancel" onclick="closeLogoutModal()">
+                            Cancel
+                        </button>
+                        <form method="POST" action="{{ route('auth.logout') }}" class="logout-modal__form">
+                            @csrf
+                            <button type="submit" class="btn logout-modal__confirm">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                                Yes, Logout
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
     @stack('scripts')
 

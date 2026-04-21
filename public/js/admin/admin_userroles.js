@@ -13,8 +13,6 @@ function toggleFilterPanel() {
 }
 
 // ── Filter pills ────────────────────────────────────────────────
-const activeFilters = { role: [], status: [] };
-
 function toggleFilterPill(btn) {
     const filterGroup = btn.closest('.filter-pills');
     const allPills = filterGroup.querySelectorAll('.filter-pill');
@@ -29,9 +27,6 @@ function toggleFilterPill(btn) {
 }
 
 function applyFilters() {
-    const search = document.getElementById('userSearch').addEventListener('input', applyFilters);
-
-    // Single selected value per group (or null if none selected)
     const activeRole   = document.querySelector('#roleFilters .filter-pill.active')?.dataset.value ?? null;
     const activeStatus = document.querySelector('#statusFilters .filter-pill.active')?.dataset.value ?? null;
 
@@ -39,16 +34,13 @@ function applyFilters() {
     let visibleCount = 0;
 
     rows.forEach(row => {
-        const name   = row.querySelector('.td-strong')?.textContent.toLowerCase() ?? '';
-        const email  = row.cells[2]?.textContent.toLowerCase() ?? '';
         const role   = row.dataset.role;
         const status = row.dataset.status;
 
-        const matchesSearch = !search || name.includes(search) || email.includes(search) || role.includes(search);
         const matchesRole   = !activeRole   || role   === activeRole;
         const matchesStatus = !activeStatus || status === activeStatus;
 
-        const visible = matchesSearch && matchesRole && matchesStatus;
+        const visible = matchesRole && matchesStatus;
         row.style.display = visible ? '' : 'none';
         if (visible) visibleCount++;
     });
@@ -58,11 +50,25 @@ function applyFilters() {
 
 function clearFilters() {
     document.querySelectorAll('.filter-pill.active').forEach(p => p.classList.remove('active'));
-    document.getElementById('userSearch').value = '';
-    applyFilters();
+    const searchInput = document.getElementById('userSearch');
+    if (searchInput) searchInput.value = '';
+    document.getElementById('searchForm').submit();
 }
 
 // ── Modals ──────────────────────────────────────────────────────
+<<<<<<< HEAD:public/js/admin/admin_userroles.js
+=======
+function openEditModal(id, name, email, role, status) {
+    document.getElementById('edit-name').value = name;
+    document.getElementById('edit-email').value = email;
+    document.getElementById('edit-role').value = role;
+    document.getElementById('edit-status').value = status;
+    document.getElementById('editForm').action = `/admin/users/${id}`;
+    document.getElementById('deleteForm').action = `/admin/users/${id}`;
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+>>>>>>> e7693c23f08e862bac12c3a59e3c92cd5d44533f:public/js/admin_userroles.js
 function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
@@ -75,48 +81,7 @@ function closeAddModal() {
     document.getElementById('addModal').style.display = 'none';
 }
 
-// ── DOM Ready ────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function () {
-
-    // Search
-    const searchInput = document.getElementById('userSearch');
-    const tableBody   = document.getElementById('userTableBody');
-    const noResults   = document.getElementById('noResults');
-
-    if (!searchInput) {
-        console.error('Search input #userSearch not found!');
-        return;
-    }
-
-    searchInput.addEventListener('input', function () {
-        const query = this.value.toLowerCase().trim();
-        const rows  = tableBody.querySelectorAll('tr');
-        let visibleCount = 0;
-
-        rows.forEach(row => {
-            const name  = row.cells[1]?.textContent.toLowerCase() ?? '';
-            const email = row.cells[2]?.textContent.toLowerCase() ?? '';
-            const role  = row.cells[3]?.textContent.toLowerCase() ?? '';
-
-            const matches = !query || name.includes(query) || email.includes(query) || role.includes(query);
-            row.style.display = matches ? '' : 'none';
-            if (matches) visibleCount++;
-        });
-
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-    });
-
-    // Modal backdrops
-    document.getElementById('editModal').addEventListener('click', function (e) {
-        if (e.target === this) closeEditModal();
-    });
-    document.getElementById('addModal').addEventListener('click', function (e) {
-        if (e.target === this) closeAddModal();
-    });
-
-});
-
-// ── Delete Confirmation ──────────────────────────────────────────
+// ── Delete Confirmation ─────────────────────────────────────────
 function openDeleteConfirm() {
     document.getElementById('deleteConfirmModal').style.display = 'flex';
 }
@@ -129,23 +94,12 @@ function submitDelete() {
     document.getElementById('deleteForm').submit();
 }
 
-// Update openEditModal to also set the delete form action
-function openEditModal(id, name, email, role, status) {
-    document.getElementById('edit-name').value   = name;
-    document.getElementById('edit-email').value  = email;
-    document.getElementById('edit-role').value   = role;
-    document.getElementById('edit-status').value = status;
-    document.getElementById('editForm').action   = `/admin/users/${id}`;
-    document.getElementById('deleteForm').action = `/admin/users/${id}`; // ← add this
-    document.getElementById('editModal').style.display = 'flex';
-}
-
+// ── Password Toggle ─────────────────────────────────────────────
 function togglePassword(fieldId, clickedIcon) {
     const field = document.getElementById(fieldId);
     const wrapper = clickedIcon.parentElement;
     const eyeClosed = wrapper.querySelector('.eye-closed');
     const eyeOpen = wrapper.querySelector('.eye-open');
-
 
     if (field.type === "password") {
         field.type = "text";
@@ -158,15 +112,17 @@ function togglePassword(fieldId, clickedIcon) {
     }
 }
 
+// ── Validation ──────────────────────────────────────────────────
 function validatePassword() {
-    const password = document.getElementById('password').value;
+    const password = document.getElementById('password');
     const errorSpan = document.getElementById('password-error');
+    if (!password || !errorSpan) return;
 
-    if (password.length < 8) {
+    if (password.value.length < 8) {
         errorSpan.textContent = "Password must be at least 8 characters.";
-    } else if (!/[A-Z]/.test(password)) {
+    } else if (!/[A-Z]/.test(password.value)) {
         errorSpan.textContent = "Password must contain at least one uppercase letter.";
-    } else if (!/[0-9]/.test(password)) {
+    } else if (!/[0-9]/.test(password.value)) {
         errorSpan.textContent = "Password must contain at least one number.";
     } else {
         errorSpan.textContent = "";
@@ -174,18 +130,75 @@ function validatePassword() {
 }
 
 function validateConfirmPassword() {
-    const password = document.getElementById('password').value;
-    const confirm = document.getElementById('password_confirmation').value;
+    const password = document.getElementById('password');
+    const confirm  = document.getElementById('password_confirmation');
     const errorSpan = document.getElementById('confirm-error');
+    if (!password || !confirm || !errorSpan) return;
 
-    if (confirm !== password) {
-        errorSpan.textContent = "Passwords do not match.";
-    } else {
-        errorSpan.textContent = "";
-    }
+    errorSpan.textContent = confirm.value !== password.value ? "Passwords do not match." : "";
 }
 
-// Attach events
-document.getElementById('password').addEventListener('blur', validatePassword);
-document.getElementById('password_confirmation').addEventListener('blur', validateConfirmPassword);
+// ── DOMContentLoaded ────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function () {
 
+   // ── Prevent form submit on Enter ────────────────────────────────
+const searchForm = document.getElementById('searchForm');
+if (searchForm) {
+    searchForm.addEventListener('submit', e => e.preventDefault());
+}
+
+// ── Live Search (fetch, no reload) ──────────────────────────────
+const searchInput = document.getElementById('userSearch');
+if (searchInput) {
+    let debounceTimer;
+
+    searchInput.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            const search  = searchInput.value.trim();
+            const perPage = document.querySelector('[name="per_page"]')?.value ?? 10;
+
+            const url = new URL(window.location.href);
+            url.searchParams.set('search', search);
+            url.searchParams.set('per_page', perPage);
+            url.searchParams.set('page', 1);
+            window.history.replaceState({}, '', url);
+
+            fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(r => r.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc    = parser.parseFromString(html, 'text/html');
+
+                    const newBody = doc.getElementById('userTableBody');
+                    if (newBody) document.getElementById('userTableBody').innerHTML = newBody.innerHTML;
+
+                    const newPagination = doc.querySelector('.table-bottom-bar');
+                    if (newPagination) document.querySelector('.table-bottom-bar').innerHTML = newPagination.innerHTML;
+
+                    const visibleRows = document.querySelectorAll('#userTableBody tr');
+                    document.getElementById('noResults').style.display =
+                        visibleRows.length === 0 ? 'block' : 'none';
+
+                    // ✅ Keep focus so user can keep typing
+                    searchInput.focus();
+                });
+        }, 300);
+    });
+}
+
+    // ── Success Alert auto-hide ─────────────────────────────────
+    const alertBox = document.querySelector('.success-alert');
+    if (alertBox) {
+        alertBox.style.opacity = '1';
+        alertBox.style.transform = 'translateY(0)';
+
+        setTimeout(() => {
+            alertBox.style.opacity = '0';
+            alertBox.style.transform = 'translateY(-10px)';
+        }, 2500);
+
+        setTimeout(() => alertBox.remove(), 3000);
+    }
+
+});
