@@ -703,19 +703,7 @@ select.form-input {
     border-radius: 8px;
     margin-bottom: 1rem;
     display: flex;
-<<<<<<< HEAD
-    justify-content: flex-start;
-    margin-top: 0.5rem;
-}
-
-/* ─── Assigned users list ─── */
-.assigned-list
-{
-    display: flex;
-    flex-direction: column;
-=======
     align-items: center;
->>>>>>> e7693c23f08e862bac12c3a59e3c92cd5d44533f
     gap: 0.5rem;
 }
 

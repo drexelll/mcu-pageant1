@@ -126,8 +126,8 @@
                             <span class="nav-icon">👥</span> Contestants
                         </a>
 
-                        <a href="#" class="nav-item">
-                            <span class="nav-icon">🏆</span> Leaderboard
+                        <a href="{{ route('sas.events') }}" class="nav-item {{ request()->routeIs('sas.events') ? 'active' : '' }}">
+                            <span class="nav-icon">🎭</span> Events
                         </a>
 
                         <span class="nav-section-label">Operations</span>

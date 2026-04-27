@@ -56,8 +56,6 @@ function clearFilters() {
 }
 
 // ── Modals ──────────────────────────────────────────────────────
-<<<<<<< HEAD:public/js/admin/admin_userroles.js
-=======
 function openEditModal(id, name, email, role, status) {
     document.getElementById('edit-name').value = name;
     document.getElementById('edit-email').value = email;
@@ -68,7 +66,6 @@ function openEditModal(id, name, email, role, status) {
     document.getElementById('editModal').style.display = 'flex';
 }
 
->>>>>>> e7693c23f08e862bac12c3a59e3c92cd5d44533f:public/js/admin_userroles.js
 function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }

@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\ContestantController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\sas\ContestantController;
+use App\Http\Controllers\admin\UserController;
+
+use App\Http\Controllers\admin\EventController as AdminEventController;
+use App\Http\Controllers\sas\EventController as SasEventController;
+
 use App\Http\Controllers\AuthController;
 
 Route::get('/', function () {
@@ -28,16 +31,16 @@ Route::delete('/admin/users/{id}/force',     [UserController::class, 'forceDelet
 Route::get('/admin/contestants', [ContestantController::class, 'index'])->name('admin.contestants');
 
 // ─── Admin Events ────────────────────────────────────────────────
-Route::get('/admin/events',              [EventController::class, 'index'])->name('admin.events');
+Route::get('/admin/events',              [AdminEventController::class, 'index'])->name('admin.events');
 
-Route::get('/admin/events/create', [EventController::class, 'create'])->name('admin.events.create');
+Route::get('/admin/events/create', [AdminEventController::class, 'create'])->name('admin.events.create');
 
-Route::post('/admin/events',             [EventController::class, 'store'])->name('admin.events.store');
-Route::get('/admin/events/{event}/edit', [EventController::class, 'edit'])->name('admin.events.edit');
-Route::put('/admin/events/{event}',      [EventController::class, 'update'])->name('admin.events.update');
-Route::delete('/admin/events/{event}',   [EventController::class, 'destroy'])->name('admin.events.destroy');
-Route::put('/admin/events/{event}/assign/{type}', [EventController::class, 'assign'])->name('admin.events.assign');
-Route::delete('/admin/events/{event}/unassign/{type}/{id}', [EventController::class, 'unassign'])->name('admin.events.unassign');
+Route::post('/admin/events',             [AdminEventController::class, 'store'])->name('admin.events.store');
+Route::get('/admin/events/{event}/edit', [AdminEventController::class, 'edit'])->name('admin.events.edit');
+Route::put('/admin/events/{event}',      [AdminEventController::class, 'update'])->name('admin.events.update');
+Route::delete('/admin/events/{event}',   [AdminEventController::class, 'destroy'])->name('admin.events.destroy');
+Route::put('/admin/events/{event}/assign/{type}', [AdminEventController::class, 'assign'])->name('admin.events.assign');
+Route::delete('/admin/events/{event}/unassign/{type}/{id}', [AdminEventController::class, 'unassign'])->name('admin.events.unassign');
 
 // ─── Judge ───────────────────────────────────────────────────────
 Route::get('/judge/dashboard', function () { return view('judge.dashboard'); })->name('judge.dashboard');
@@ -45,9 +48,16 @@ Route::get('/judge/dashboard', function () { return view('judge.dashboard'); })-
 // ─── SAS ─────────────────────────────────────────────────────────
 Route::get('/sas/dashboard', function () { return view('sas.dashboard'); })->name('sas.dashboard');
 
+Route::get('/sas/events',              [SasEventController::class, 'index'])->name('sas.events');
 Route::get('/sas/contestants', [ContestantController::class, 'index'])->name('sas.contestants');
 Route::get('/sas/contestants/create', [ContestantController::class, 'create'])->name('sas.contestants.create');
+Route::get('/sas/contestants/archive',                   [ContestantController::class, 'archive'])->name('sas.contestants.archive');
+Route::delete('/sas/contestants/{contestant}',          [ContestantController::class, 'destroy'])->name('sas.contestants.destroy');
+Route::post('/sas/contestants/{id}/restore',             [ContestantController::class, 'restore'])->name('sas.contestants.restore');
+Route::delete('/sas/contestants/{id}/force',             [ContestantController::class, 'forceDelete'])->name('sas.contestants.force-delete');
 Route::post('/sas/contestants', [ContestantController::class, 'store'])->name('sas.contestants.store');
+Route::get('/sas/contestants/{contestant}/edit', [ContestantController::class, 'edit'])->name('sas.contestants.edit');
+Route::put('/sas/contestants/{contestant}', [ContestantController::class, 'update'])->name('sas.contestants.update');
 
 // ─── Auth ────────────────────────────────────────────────────────
 Route::get('/auth/microsoft',          [AuthController::class, 'redirect'])->name('auth.microsoft');
