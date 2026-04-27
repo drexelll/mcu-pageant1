@@ -78,3 +78,7 @@ Route::get('/dev-login/{role}', function ($role) {
     }
     return 'No user found with role: ' . $role;
 })->middleware('web');
+
+Route::get('/auth/google',          [AuthController::class, 'redirectGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [AuthController::class, 'callbackGoogle'])->name('auth.google.callback');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login');
